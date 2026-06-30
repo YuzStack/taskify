@@ -1,69 +1,24 @@
-// BASICS ‼️
-// let name: string; // type of string
-// let age: number; // type of number
-// let isStudent: boolean; // type of boolean
-// let hobbies: string[]; // an array of string
-// let role: [number, string]; // tuples
+import { useState } from 'react';
 
-// // Object type
-// type Person = {
-//   name: string;
-//   age?: number;
-// };
-
-// let person: Person = {
-//   name: 'Yusuf',
-//   age: 23,
-// };
-
-// let lotsOfPeople: Person[];
-
-// INTERMEDIATE ‼️
-// let age: number | string; // Union
-
-// function printName(name: string) {
-//   console.log(name);
-// }
-
-// let printAge: (age: number) => void;
-
-// printAge = function (age) {
-//   console.log(age);
-// };
-
-// let personName: unknown;
-
-// interface Person {
-//   name: string;
-//   age?: number;
-// }
-
-// type X = {
-//   a: string;
-//   b: number;
-// };
-
-// type Y = X & {
-//   c: string;
-//   d: number;
-// };
-
-// const y: Y = { a: '', b: 23, c: '', d: 33 };
-
-// interface Guy extends Person {
-//   profession: string;
-// }
-
-// const guy: Guy = {
-//   name: 'Yusuf',
-//   age: 22,
-//   profession: 'Frontend Engineer',
-// };
+import '../styles/App.css';
+import InputField from './InputField';
+import type { Todo } from '../types/todo';
+import TodoList from './TodoList';
 
 export default function AppLayout() {
+  const [todo, setTodo] = useState<string>('');
+  const [todos, setTodos] = useState<Todo[]>([]);
+
+  const addTodo = function (newTodo: Todo) {
+    setTodos(curTodos => [...curTodos, newTodo]);
+  };
+
   return (
-    <h1 className='p-2 text-2xl font-semibold'>
-      Hello, this is a Vite + TypeScript + React + Tailwind project, enjoy!
-    </h1>
+    <div className='App'>
+      <h1 className='heading'>Taskify</h1>
+
+      <InputField todo={todo} setTodo={setTodo} addTodo={addTodo} />
+      <TodoList todos={todos} setTodos={setTodos} />
+    </div>
   );
 }
